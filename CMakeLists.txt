@@ -13,7 +13,7 @@ set(RAYLIB_DIR ${CMAKE_SOURCE_DIR}/lib/raylib)
 add_library(unity STATIC ${UNITY_DIR}/unity.c)
 target_include_directories(unity PUBLIC ${UNITY_DIR})
 
-# RAYBLIB
+# RAYLIB
 find_package(raylib)
 
 # APPLICATION
@@ -28,4 +28,6 @@ add_executable(game_of_life_app ${CMAKE_SOURCE_DIR}/test/test_game_of_life.c
                     src/game_of_life.c)
 target_include_directories(game_of_life_app PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(game_of_life_app unity)
+target_link_libraries(game_of_life_app raylib)
+target_include_directories(game_of_life_app PUBLIC ${RAYLIB_DIR}/include)
 add_test(game_of_life_test game_of_life_app)

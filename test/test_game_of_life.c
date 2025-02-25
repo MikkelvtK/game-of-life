@@ -35,14 +35,49 @@ test_build_grid(void) {
 
 void
 test_get_idx(void) {
-    grid_t *grid = build_grid(5, 5);
-    int len = 5 * 5;
+    int rows = 5, cols = 5;
+    grid_t *grid = build_grid(rows, cols);
+    int len = rows * cols;
     TEST_ASSERT_NOT_NULL(grid);
     TEST_ASSERT_NOT_NULL(grid->data);
-    TEST_ASSERT_EQUAL(get_idx(grid, 4, 4), len - 1);
+    TEST_ASSERT_EQUAL(get_idx(grid, rows - 1, cols - 1), len - 1);
 
     destroy_grid(&grid);
 
+    TEST_ASSERT_NULL(grid);
+
+    rows = 800, cols = 450;
+    grid = build_grid(rows, cols);
+    len = rows * cols;
+    TEST_ASSERT_NOT_NULL(grid);
+    TEST_ASSERT_NOT_NULL(grid->data);
+    TEST_ASSERT_EQUAL(get_idx(grid, rows - 1, cols - 1), len - 1);
+
+    destroy_grid(&grid);
+
+    TEST_ASSERT_NULL(grid);
+}
+
+void
+test_randomize_grid(void) {
+    grid_t *grid = build_grid(5, 5);
+    randomize_grid(grid);
+
+    TEST_ASSERT_NOT_NULL(grid);
+    TEST_ASSERT_NOT_NULL(grid->data);
+
+    int count = 0;
+    for (int row = 0; row < grid->num_rows; row++) {
+        for (int col = 0; col < grid->num_cols; col++) {
+            if (grid->data[get_idx(grid, row, col)] == 1) {
+                count++;
+            }
+        }
+    }
+
+    TEST_ASSERT(count > 0);
+
+    destroy_grid(&grid);
     TEST_ASSERT_NULL(grid);
 }
 
@@ -52,5 +87,6 @@ UNITY_BEGIN();
     RUN_TEST(test_set_up);
     RUN_TEST(test_build_grid);
     RUN_TEST(test_get_idx);
+    RUN_TEST(test_randomize_grid);
 return UNITY_END();
 }

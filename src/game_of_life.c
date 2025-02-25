@@ -4,8 +4,42 @@
 
 #include "game_of_life.h"
 
+#include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+void
+draw(grid_t *grid) {
+    BeginDrawing();
+    ClearBackground(BLACK);
+
+    for (int row = 0; row < grid->num_rows; row++) {
+        for (int col = 0; col < grid->num_cols; col++) {
+            const Color c = grid->data[get_idx(grid, row, col)] ? LIGHTGRAY : BLACK;
+            DrawRectangle(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1, c);
+        }
+    }
+
+    EndDrawing();
+}
+
+void
+update(grid_t *grid) {
+
+}
+
+grid_t*
+init() {
+    SetTargetFPS(fps);
+
+    grid_t *grid = build_grid(screen_height / CELL_SIZE, screen_width / CELL_SIZE);
+    if (grid->data == NULL) {
+        exit(EXIT_FAILURE);
+    }
+
+    randomize_grid(grid);
+    return grid;
+}
 
 grid_t*
 build_grid(int num_rows, int num_cols) {
@@ -26,6 +60,15 @@ build_grid(int num_rows, int num_cols) {
 }
 
 void
+randomize_grid(grid_t *grid) {
+    for (int row = 0; row < grid->num_rows; row++) {
+        for (int col = 0; col < grid->num_cols; col++) {
+            grid->data[get_idx(grid, row, col)] = GetRandomValue(0, 4) == 4;
+        }
+    }
+}
+
+void
 destroy_grid(grid_t **grid) {
     free((*grid)->data);
     free(*grid);
@@ -33,7 +76,28 @@ destroy_grid(grid_t **grid) {
 }
 
 int
-get_idx(grid_t *grid, int row, int col) {
+get_idx(const grid_t *grid, int row, int col) {
    return row * grid->num_cols + col;
 }
 
+int
+count_neighbours(const grid_t *grid, int row, int col) {
+    const int num_neighbours = 8;
+    pos_t ndeltas[8] = {
+        {.x = -1, .y = 0},
+        {.x = 1, .y = 0},
+        {.x = 0, .y = -1},
+        {.x = 0, .y = 1},
+        {.x = -1, .y = -1},
+        {.x = -1, .y = 1},
+        {.x = 1, .y = -1},
+        {.x = 1, .y = 1},
+    };
+
+    int count = 0;
+    for (int i = 0; i < num_neighbours; i++) {
+
+    }
+
+    return count;
+}

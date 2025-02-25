@@ -1,16 +1,20 @@
 #include <game_of_life.h>
 #include <raylib.h>
+#include <stdlib.h>
 
 int main(void) {
     InitWindow(screen_width, screen_height, "Game of Life");
 
+    grid_t *grid = init();
+
     while (!WindowShouldClose()) {
-        BeginDrawing();
-        ClearBackground(BLACK);
-        DrawText("Hello World!", 20, 20, 20, LIGHTGRAY);
-        EndDrawing();
+        draw(grid);
     }
 
     CloseWindow();
-    return 0;
+    destroy_grid(&grid);
+    if (grid != NULL) {
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }

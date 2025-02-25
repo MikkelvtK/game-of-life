@@ -7,6 +7,11 @@
 
 #define CELL_SIZE 25
 
+typedef struct pos {
+    int x;
+    int y;
+} pos_t;
+
 typedef struct grid {
     int     num_rows;
     int     num_cols;
@@ -15,13 +20,15 @@ typedef struct grid {
 
 static const int screen_width = 800;
 static const int screen_height = 450;
-static const int fpd = 12;
+static const int fps = 12;
 
 void    draw(grid_t *grid);
 void    update(grid_t *grid);
 grid_t* init();
 grid_t* build_grid(int num_rows, int num_cols);
+void    randomize_grid(grid_t *grid);
 void    destroy_grid(grid_t **grid);
-int     get_idx(grid_t *grid, int row, int col);
+int     get_idx(const grid_t *grid, int row, int col);
+int     count_neighbors(const grid_t *grid, int row, int col);
 
 #endif //GAME_OF_LIFE_H
