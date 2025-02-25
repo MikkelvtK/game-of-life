@@ -9,6 +9,7 @@ int main(void) {
 
     while (!WindowShouldClose()) {
         draw(grid);
+        update(grid);
     }
 
     CloseWindow();

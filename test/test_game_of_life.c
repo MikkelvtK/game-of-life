@@ -29,7 +29,6 @@ test_build_grid(void) {
     TEST_ASSERT_EQUAL(grid->data[grid->num_cols * grid->num_rows - 1], 0);
 
     destroy_grid(&grid);
-
     TEST_ASSERT_NULL(grid);
 }
 
@@ -43,7 +42,6 @@ test_get_idx(void) {
     TEST_ASSERT_EQUAL(get_idx(grid, rows - 1, cols - 1), len - 1);
 
     destroy_grid(&grid);
-
     TEST_ASSERT_NULL(grid);
 
     rows = 800, cols = 450;
@@ -54,7 +52,6 @@ test_get_idx(void) {
     TEST_ASSERT_EQUAL(get_idx(grid, rows - 1, cols - 1), len - 1);
 
     destroy_grid(&grid);
-
     TEST_ASSERT_NULL(grid);
 }
 
@@ -76,6 +73,45 @@ test_randomize_grid(void) {
     }
 
     TEST_ASSERT(count > 0);
+    TEST_ASSERT(count <= grid->num_cols * grid->num_rows);
+
+    destroy_grid(&grid);
+    TEST_ASSERT_NULL(grid);
+}
+
+void test_count_neighbours(void) {
+    grid_t *grid = build_grid(3, 3);
+    grid->data[get_idx(grid, 0, 0)] = 1;
+    grid->data[get_idx(grid, 0, 1)] = 1;
+    grid->data[get_idx(grid, 1, 0)] = 1;
+
+    int count = count_neighbours(grid, 1, 1);
+    TEST_ASSERT_EQUAL(count, 3);
+
+    count = count_neighbours(grid, 0, 0);
+    TEST_ASSERT_EQUAL(count, 2);
+
+    count = count_neighbours(grid, 2, 2);
+    TEST_ASSERT_EQUAL(count, 3);
+
+    destroy_grid(&grid);
+    TEST_ASSERT_NULL(grid);
+}
+
+void
+test_get_cell_state(void) {
+    grid_t *grid = build_grid(3, 3);
+    grid->data[get_idx(grid, 0, 0)] = 1;
+    grid->data[get_idx(grid, 0, 1)] = 1;
+
+    int s = get_cell_state(grid, 1, 1);
+    TEST_ASSERT_EQUAL(s, 0);
+
+    s = get_cell_state(grid, 0, 0);
+    TEST_ASSERT_EQUAL(s, 0);
+
+    s = get_cell_state(grid, 0, 1);
+    TEST_ASSERT_EQUAL(s, 0);
 
     destroy_grid(&grid);
     TEST_ASSERT_NULL(grid);
@@ -88,5 +124,7 @@ UNITY_BEGIN();
     RUN_TEST(test_build_grid);
     RUN_TEST(test_get_idx);
     RUN_TEST(test_randomize_grid);
+    RUN_TEST(test_count_neighbours);
+    RUN_TEST(test_get_cell_state);
 return UNITY_END();
 }

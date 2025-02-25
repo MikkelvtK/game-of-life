@@ -25,7 +25,19 @@ draw(grid_t *grid) {
 
 void
 update(grid_t *grid) {
+    int *tgrid = calloc(grid->num_rows * grid->num_cols, sizeof(int));
+    if (tgrid == NULL) {
+        exit(EXIT_FAILURE);
+    }
 
+    for (int row = 0; row < grid->num_rows; row++) {
+        for (int col = 0; col < grid->num_cols; col++) {
+            tgrid[get_idx(grid, row, col)] = get_cell_state(grid, row, col);
+        }
+    }
+
+    free(grid->data);
+    grid->data = tgrid;
 }
 
 grid_t*
@@ -63,7 +75,7 @@ void
 randomize_grid(grid_t *grid) {
     for (int row = 0; row < grid->num_rows; row++) {
         for (int col = 0; col < grid->num_cols; col++) {
-            grid->data[get_idx(grid, row, col)] = GetRandomValue(0, 4) == 4;
+            grid->data[get_idx(grid, row, col)] = GetRandomValue(0, initial_density) == initial_density;
         }
     }
 }
@@ -83,7 +95,7 @@ get_idx(const grid_t *grid, int row, int col) {
 int
 count_neighbours(const grid_t *grid, int row, int col) {
     const int num_neighbours = 8;
-    pos_t ndeltas[8] = {
+    const pos_t ndeltas[8] = {
         {.x = -1, .y = 0},
         {.x = 1, .y = 0},
         {.x = 0, .y = -1},
@@ -96,8 +108,26 @@ count_neighbours(const grid_t *grid, int row, int col) {
 
     int count = 0;
     for (int i = 0; i < num_neighbours; i++) {
-
+        const int nrow = (row + ndeltas[i].y + grid->num_rows) % grid->num_rows;
+        const int ncol = (col + ndeltas[i].x + grid->num_cols) % grid->num_cols;
+        count += grid->data[get_idx(grid, nrow, ncol)];
     }
 
     return count;
+}
+
+int
+get_cell_state(const grid_t *grid, int row, int col) {
+    const int ncount = count_neighbours(grid, row, col);
+    const int cell = grid->data[get_idx(grid, row, col)];
+
+    if (cell && (ncount < 2 || ncount > 3)) {
+        return DEAD;
+    }
+
+    if (!cell && ncount != 3) {
+        return DEAD;
+    }
+
+    return ALIVE;
 }
