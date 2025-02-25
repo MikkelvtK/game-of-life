@@ -17,10 +17,11 @@ static const int screen_width = 800;
 static const int screen_height = 450;
 static const int fpd = 12;
 
-void    draw(grid_t* grid);
-void    update(grid_t* grid);
+void    draw(grid_t *grid);
+void    update(grid_t *grid);
 grid_t* init();
 grid_t* build_grid(int num_rows, int num_cols);
-int     get_idx(int row, int col);
+void    destroy_grid(grid_t **grid);
+int     get_idx(grid_t *grid, int row, int col);
 
 #endif //GAME_OF_LIFE_H
