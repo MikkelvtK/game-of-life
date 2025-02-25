@@ -27,6 +27,7 @@ void
 update(grid_t *grid) {
     int *tgrid = calloc(grid->num_rows * grid->num_cols, sizeof(int));
     if (tgrid == NULL) {
+        destroy_grid(&grid);
         exit(EXIT_FAILURE);
     }
 
@@ -95,7 +96,7 @@ get_idx(const grid_t *grid, int row, int col) {
 int
 count_neighbours(const grid_t *grid, int row, int col) {
     const int num_neighbours = 8;
-    const pos_t ndeltas[8] = {
+    const pos_t ndeltas[num_neighbours] = {
         {.x = -1, .y = 0},
         {.x = 1, .y = 0},
         {.x = 0, .y = -1},

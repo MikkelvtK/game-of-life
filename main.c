@@ -13,9 +13,11 @@ int main(void) {
     }
 
     CloseWindow();
+
     destroy_grid(&grid);
     if (grid != NULL) {
         return EXIT_FAILURE;
     }
+
     return EXIT_SUCCESS;
 }

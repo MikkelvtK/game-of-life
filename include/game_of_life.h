@@ -22,8 +22,8 @@ typedef struct grid {
 
 static const int screen_width = 1200;
 static const int screen_height = 800;
-static const int fps = 8;
-static const int initial_density = 3;
+static const int fps = 12;
+static const int initial_density = 4;
 
 void    draw(grid_t *grid);
 void    update(grid_t *grid);
