@@ -12,7 +12,8 @@ it will not be actively worked on.
 
 ### Dependencies
 
-* Uses Raylib for it's simulation
+* Uses [raylib](https://github.com/raysan5/raylib) for it's simulation
+* Uses [unity](https://github.com/ThrowTheSwitch/Unity) as a testing framework
 * Uses Cmake for building the project
 * Has been developed on MacOS and hasn't been tested on other systems
 
