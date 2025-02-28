@@ -9,30 +9,12 @@
 #define ALIVE 1
 #define DEAD 0
 
-typedef struct pos {
-    int x;
-    int y;
-} pos_t;
-
-typedef struct grid {
-    int     num_rows;
-    int     num_cols;
-    int*    data;
-} grid_t;
-
 static const int screen_width = 1200;
 static const int screen_height = 800;
-static const int fps = 12;
-static const int initial_density = 4;
+static const int fps = 8;
 
-void    draw(grid_t *grid);
-void    update(grid_t *grid);
-grid_t* init();
-grid_t* build_grid(int num_rows, int num_cols);
-void    randomize_grid(grid_t *grid);
-void    destroy_grid(grid_t **grid);
-int     get_idx(const grid_t *grid, int row, int col);
-int     count_neighbours(const grid_t *grid, int row, int col);
-int     get_cell_state(const grid_t *grid, int row, int col);
+void    init(void);
+void    update_draw_frame(void);
+void    cleanup(void);
 
 #endif //GAME_OF_LIFE_H
