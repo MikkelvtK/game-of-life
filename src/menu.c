@@ -37,3 +37,7 @@ void menu_draw(menu_t *menu) {
     };
     DrawText(menu->text, (int) text_pos.x, (int) text_pos.y, font_size, font_color);
 }
+
+void menu_destroy(menu_t *menu) {
+    free(menu);
+}

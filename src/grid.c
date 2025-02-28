@@ -60,7 +60,7 @@ int grid_get_cell_state(grid_t *grid, int row, int col) {
 grid_t *grid_create(int width, int height) {
     grid_t *grid = malloc(sizeof(grid_t));
     if (grid == NULL) {
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     grid->cols = width / CELL_SIZE;
@@ -68,7 +68,7 @@ grid_t *grid_create(int width, int height) {
     grid->data = calloc(grid->rows * grid->cols, sizeof(int));
     if (grid->data == NULL) {
         free(grid);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     return grid;
@@ -93,11 +93,10 @@ void grid_draw(grid_t *grid) {
     }
 }
 
-void grid_update(grid_t *grid) {
+int grid_update(grid_t *grid) {
     int *tgrid = calloc(grid->rows * grid->cols, sizeof(int));
     if (tgrid == NULL) {
-        grid_destroy(&grid);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     for (int row = 0; row < grid->rows; row++) {
@@ -108,6 +107,7 @@ void grid_update(grid_t *grid) {
 
     free(grid->data);
     grid->data = tgrid;
+    return 0;
 }
 
 void grid_randomize(grid_t *grid) {
