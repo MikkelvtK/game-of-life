@@ -11,8 +11,8 @@
 
 static const int screen_width = 1200;
 static const int screen_height = 800;
-static const int grid_height = 600;
-static const int menu_height = 200;
+static const int grid_height = 700;
+static const int menu_height = 100;
 static const int fps = 8;
 
 void    init(void);

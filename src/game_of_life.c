@@ -56,12 +56,11 @@ void update_draw_frame(void) {
 void cleanup(void) {
     grid_destroy(&grid);
     if (grid != NULL) {
-        print
         exit(EXIT_FAILURE);
     }
 
-    menu_destroy(menu);
-    if (grid != NULL) {
+    menu_destroy(&menu);
+    if (menu != NULL) {
         exit(EXIT_FAILURE);
     }
 }
