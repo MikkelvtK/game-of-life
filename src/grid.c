@@ -6,11 +6,12 @@
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct grid_s {
     int rows;
     int cols;
-    int *data;
+    int data[];
 };
 
 static const int initial_density = 4;
@@ -58,24 +59,21 @@ int grid_get_cell_state(grid_t *grid, int row, int col) {
 }
 
 grid_t *grid_create(int width, int height) {
-    grid_t *grid = malloc(sizeof(grid_t));
+    const int rows = height / CELL_SIZE;
+    const int cols = width / CELL_SIZE;
+
+    grid_t *grid = malloc(sizeof(grid_t) + (rows * cols * sizeof(int)));
     if (grid == NULL) {
         return NULL;
     }
 
-    grid->cols = width / CELL_SIZE;
-    grid->rows = height / CELL_SIZE;
-    grid->data = calloc(grid->rows * grid->cols, sizeof(int));
-    if (grid->data == NULL) {
-        free(grid);
-        return NULL;
-    }
-
+    grid->cols = cols;
+    grid->rows = rows;
+    grid_randomize(grid);
     return grid;
 }
 
 void grid_destroy(grid_t **grid) {
-    free((*grid)->data);
     free(*grid);
     *grid = NULL;
 }
@@ -105,8 +103,10 @@ int grid_update(grid_t *grid) {
         }
     }
 
-    free(grid->data);
-    grid->data = tgrid;
+    int *dst = memcpy(grid->data, tgrid, sizeof(int) * grid->rows * grid->cols);
+    if (dst == NULL) {
+        return -1;
+    }
     return 0;
 }
 

@@ -13,7 +13,7 @@ struct menu_s {
     char *text;
 };
 
-static const int font_size = 20;
+static const int font_size = 18;
 static const Color font_color = LIGHTGRAY;
 
 menu_t* menu_create(int width, int height, Vector2 pos) {

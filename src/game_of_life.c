@@ -20,6 +20,7 @@ void draw(void) {
     ClearBackground(BLACK);
 
     grid_draw(grid);
+    menu_draw(menu);
 
     EndDrawing();
 }
@@ -37,10 +38,9 @@ void init() {
         exit(EXIT_FAILURE);
     }
 
-    grid_randomize(grid);
     grid_draw(grid);
 
-    menu = menu_create(screen_width, menu_height, (Vector2){0, screen_height});
+    menu = menu_create(screen_width, menu_height, (Vector2){0, grid_height});
     if (menu == NULL) {
         printf("Failed to create menu\n");
         grid_destroy(&grid);
