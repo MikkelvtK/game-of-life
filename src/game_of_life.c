@@ -4,6 +4,7 @@
 
 #include "game_of_life.h"
 
+#include <inputs.h>
 #include <menu.h>
 
 #include "grid.h"
@@ -14,6 +15,7 @@
 
 static grid_t *grid;
 static menu_t *menu;
+static state_t state;
 
 void draw(void) {
     BeginDrawing();
@@ -26,7 +28,8 @@ void draw(void) {
 }
 
 void update(void) {
-    grid_update(grid);
+    if (state == RUNNING)
+        grid_update(grid);
 }
 
 void init() {
@@ -46,6 +49,8 @@ void init() {
         grid_destroy(&grid);
         exit(EXIT_FAILURE);
     }
+
+    state = RUNNING;
 }
 
 void update_draw_frame(void) {
@@ -62,5 +67,11 @@ void cleanup(void) {
     menu_destroy(&menu);
     if (menu != NULL) {
         exit(EXIT_FAILURE);
+    }
+}
+
+void listen_key_input(void) {
+    if (IsKeyPressed(KEY_SPACE)) {
+        state = handle_space(state);
     }
 }

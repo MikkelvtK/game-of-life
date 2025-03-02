@@ -8,6 +8,7 @@ int main(void) {
     init();
 
     while (!WindowShouldClose()) {
+        listen_key_input();
         update_draw_frame();
     }
 
