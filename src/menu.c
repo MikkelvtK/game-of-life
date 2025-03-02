@@ -19,7 +19,7 @@ static const int font_size = 14;
 static const Color font_color = LIGHTGRAY;
 
 menu_t* menu_create(int width, int height, Vector2 pos) {
-    menu_t *menu = malloc(sizeof(struct menu_s));
+    menu_t *menu = (menu_t *)malloc(sizeof(struct menu_s));
     if (menu == NULL) {
         return NULL;
     }

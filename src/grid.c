@@ -62,7 +62,7 @@ grid_t *grid_create(int width, int height) {
     const int rows = height / CELL_SIZE;
     const int cols = width / CELL_SIZE;
 
-    grid_t *grid = malloc(sizeof(grid_t) + (rows * cols * sizeof(int)));
+    grid_t *grid = (grid_t *)malloc(sizeof(grid_t) + (rows * cols * sizeof(int)));
     if (grid == NULL) {
         return NULL;
     }
@@ -92,7 +92,7 @@ void grid_draw(grid_t *grid) {
 }
 
 int grid_update(grid_t *grid) {
-    int *tgrid = calloc(grid->rows * grid->cols, sizeof(int));
+    int *tgrid = (int *)calloc(grid->rows * grid->cols, sizeof(int));
     if (tgrid == NULL) {
         return -1;
     }
