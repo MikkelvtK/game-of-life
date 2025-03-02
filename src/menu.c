@@ -24,7 +24,7 @@ menu_t* menu_create(int width, int height, Vector2 pos) {
         return NULL;
     }
 
-    char *text = "<SPACE> Pause";
+    char *text = "<SPACE> Pause | <R> Restart";
     menu->width = width;
     menu->height = height;
     menu->pos = pos;

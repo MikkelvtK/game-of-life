@@ -10,3 +10,8 @@ state_t handle_space(state_t current_state) {
         return PAUSED;
     return RUNNING;
 }
+
+state_t handle_r(grid_t *grid) {
+    grid_randomize(grid);
+    return RUNNING;
+}

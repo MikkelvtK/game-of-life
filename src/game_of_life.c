@@ -73,5 +73,7 @@ void cleanup(void) {
 void listen_key_input(void) {
     if (IsKeyPressed(KEY_SPACE)) {
         state = handle_space(state);
+    } else if (IsKeyPressed(KEY_R)) {
+        state = handle_r(grid);
     }
 }
